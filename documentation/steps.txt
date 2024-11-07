@@ -1,0 +1,19 @@
+### **Project Structure Recommendations**
+
+1. **Create Packages**:
+   - `model`: For entities (Task, Category, Reminder, Priority).
+   - `storage`: For JSON handling classes.
+   - `view`: For JavaFX GUI classes.
+   - `controller`: For classes that handle the logic between the model and view.
+
+2. **Add JSON Library to lib Folder**:
+   - Add a library like **Jackson or Gson** for JSON handling. You can reference it in `settings.json`.
+
+3. **Expand `App.java`**:
+   - This class will likely serve as the entry point and should handle initializing the GUI and loading initial data from JSON files.
+
+4. **Implement Classes for Each Entity**:
+   - Each entity should be a class (e.g., `Task`, `Category`) with methods for manipulating data in memory.
+  
+5. **Add JSON File Reading/Writing Logic**:
+   - Classes to read from and write to JSON should handle specific files, with methods to save all data when the app closes.
