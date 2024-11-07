@@ -1,3 +1,85 @@
+I need some help with a java and javafx project. I have set up the java and java fx on my computer and started a new java project on vs code with no tools. I will now give you the structure of this project, as it is now, so you can guide me on how to proceed with precision.
+
+    Directory: C:\Users\juant\Documents\coding\task-mng-system\task-mng-system
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----         6/11/2024  10:32 μμ                .vscode
+d-----         6/11/2024  10:32 μμ                bin
+d-----         6/11/2024   8:32 μμ                documentation
+d-----         6/11/2024  10:32 μμ                lib
+d-----         6/11/2024  10:32 μμ                src
+
+in the .vscode folder I have two files named launch.json and settings.json:
+
+## launch.json
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "App",
+            "projectName": "task-mng-system_d5a7a0d1"
+        }
+    ]
+}
+
+
+## settings.json
+{
+    "java.project.sourcePaths": ["src"],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\juant\\Downloads\\javafx-sdk-23.0.1\\lib\\javafx.base.jar",
+        "c:\\Users\\juant\\Downloads\\javafx-sdk-23.0.1\\lib\\javafx.controls.jar",
+        "c:\\Users\\juant\\Downloads\\javafx-sdk-23.0.1\\lib\\javafx.fxml.jar",
+        "c:\\Users\\juant\\Downloads\\javafx-sdk-23.0.1\\lib\\javafx.graphics.jar",
+        "c:\\Users\\juant\\Downloads\\javafx-sdk-23.0.1\\lib\\javafx.media.jar",
+        "c:\\Users\\juant\\Downloads\\javafx-sdk-23.0.1\\lib\\javafx.swing.jar",
+        "c:\\Users\\juant\\Downloads\\javafx-sdk-23.0.1\\lib\\javafx.web.jar",
+        "c:\\Users\\juant\\Downloads\\javafx-sdk-23.0.1\\lib\\javafx-swt.jar"
+    ]
+}
+
+
+in the bin folder I have a file named App.class:
+// Source code is decompiled from a .class file using FernFlower decompiler.
+public class App {
+   public App() {
+   }
+
+   public static void main(String[] args) throws Exception {
+      System.out.println("Hello, World!");
+   }
+}
+
+in the documentation folder I just have the pdf that has the description of the project (which I attached to you here)
+
+in the lib folder I don't have anything
+in the src folder I have a file named App.java:
+public class App {
+    public static void main(String[] args) throws Exception {
+        System.out.println("Hello, World!");
+    }
+}
+
+
+
+With all this in mind I'll give you the instructions of the project.
+
 # Section 1: Design and Implementation of Logic
 Description of the Entities and Attributes. Inside the [] is the format or mandatory values the Attributes will take.
 
@@ -83,3 +165,7 @@ These cells should display a button that redirects the user to another page, in 
 - Cell 7: Priority Management. The App must present the available Priorities. The user can create, modify and delete Priorities (according to previous instrucions in Sections 1 and 2).
 - Cell 8: Reminder Management. The App must present the available Reminders. The user can create, modify and delete Reminders (according to previous instrucions in Sections 1 and 2).
 
+
+
+
+Give me a detailed overview of the project so I can be sure that you understood my prompt.
