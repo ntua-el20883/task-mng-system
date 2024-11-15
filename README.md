@@ -189,7 +189,7 @@ Users can search Tasks using any combination of these criteria:
 - The GUI implementation should ensure that when the App is terminated, the system information in the relevant files is updated.
 - The frontend will have only one (central) window, divided in half.
 - **Header**: On the top left of the central window, there should be the title/header `"MediaLab Assistant"`.
-- **Layout**: Each half (top and buttom) will have 4 "cells" or areas (2x4 grid). The cells of the top half will be named for convinience 1, 2, 3 and 4 (from left to right), while the cells of the buttom half will be named 5, 6, 7 and 8 (from left to right).
+- **Layout**: Each half (top and bottom) will have 4 "cells" or areas (2x4 grid). The cells of the top half will be named for convinience 1, 2, 3 and 4 (from left to right), while the bottom's cells are 5, 6, 7 and 8 (from left to right).
  
 ### **Cells 1-4 (Top Half)**:
 1. **Cell 1**: Total number of Tasks, regardless of `"Status"`.  
