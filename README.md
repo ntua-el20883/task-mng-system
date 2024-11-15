@@ -79,15 +79,42 @@ Follow these steps to set up your environment successfully.
      C:\Users\juant\Documents\coding\task-mng-system\lib
      ```
 
+---
+
+### Side Note: VS-Code
+If you're using VS-Code, ***Extension Pack for Java*** is a collection of popular extensions that can help you. The pack includes the following extensions:
+
+- 📦 Language Support for Java™ by Red Hat
+   - Code Navigation
+   - Auto Completion
+   - Refactoring
+   - Code Snippets
+- 📦 Debugger for Java
+   - Debugging
+- 📦 Test Runner for Java
+   - Run & Debug JUnit/TestNG Test Cases
+- 📦 Maven for Java
+   - Project Scaffolding
+   - Custom Goals
+- 📦 Gradle for Java
+   - View Gradle tasks and project dependencies
+   - Gradle file authoring
+   - Import Gradle projects via Gradle Build Server
+- 📦 Project Manager for Java
+   - Manage Java projects, referenced libraries, resource files, packages, classes, and class members
+- 📦 Visual Studio IntelliCode
+   - AI-assisted development
+   - Completion list ranked by AI
 
 ---
+
 
 # Project Description
 
 ## **Section 1: Design and Implementation of Logic**
+Description of the Entities and Attributes. Inside the [] is the format or mandatory values the Attributes will take.
 
 ### **Task**
-- **Attributes**:
 - **Title**
 - **Description**
 - **Category**: `["Default", ...]`
@@ -96,62 +123,45 @@ Follow these steps to set up your environment successfully.
 - **Status**: `["Open", "In Progress", "Postponed", "Completed", "Delayed"]`
 
 #### **Points to Consider**
-- A new task defaults to status `"Open"`.
-- Tasks with deadlines in the past automatically update to `"Delayed"`.
-- Users can:
-- Create a new Task.
-- Modify existing tasks (excluding Status).
-- Delete tasks (also removes associated Reminders, if any).
+- A new task has default status `"Open"`.
+- If the current date is past the deadline, the status should automatically be updated to `"Delayed"`.
+- The user can create a new Task, modify an existing one (all attributes except Status) and delete one (in which case its corresponding Reminders (if they exist) should also be deleted).
 
 ---
 
 ### **Category**
-- **Attributes**:
 - **Name**
 
 #### **Points to Consider**
-- Tasks belong to exactly one Category.
-- Unspecified Categories default to `"Default"`.
-- Users can:
-- Create new Categories.
-- Modify existing Categories.
-- Delete Categories (also removes associated Tasks, if any).
+- A Task belongs to exactly one Category.
+- If the user does not specify the Category of a new Task, the Category is `"Default"`.
+- The user can create new Categories, modify the name of existing ones and delete (in which case its corresponding Tasks (if they exist) should also be deleted).
 
 ---
 
 ### **Reminder**
-- **Attributes**:
 - **Date**
 
 #### **Points to Consider**
-- Valid Reminder dates:
-- `"1 day before Deadline"`, `"1 week before Deadline"`, `"1 month before Deadline"`, or custom dates before the Deadline.
-- Rules:
+- Valid Reminder dates: `"1 day before Deadline"`, `"1 week before Deadline"`, `"1 month before Deadline"`, or custom dates before the Deadline.
 - Reminders belong to exactly one Task.
 - Tasks may have multiple Reminders.
-- Completed Tasks cannot have new Reminders.
+- `"Completed"` Tasks cannot have new Reminders.
 - Tasks marked as `"Completed"` automatically delete their Reminders.
-- Users can:
-- Create new Reminders.
-- Modify existing ones.
-- Delete Reminders.
+- The user can create new Reminders, modify the date of existing ones and delete.
 
 ---
 
 ### **Priority**
-- **Attributes**:
 - **Name**: `["Default", ...]`
 - **Value**: `["0", ...]`
 
 #### **Points to Consider**
-- Default Priority is `"Default"` with a Value of `0`.
+- If the user doesn't assign a Priority to a new Task, its Priority will be set to the default Priority, with  `Name: "Default"` and  `Value: "0"`.
 - Larger Values indicate higher Priority.
 - Priority Values must be unique and integers > 0.
 - Users cannot modify or delete the `"Default"` Priority.
-- Users can:
-- Create new Priorities.
-- Modify existing ones.
-- Delete Priorities (affected Tasks default to `"Default"` Priority).
+- The user can create new Priorities (assigning a Name and Value), modify existing ones and delete (in which case its corresponding Tasks (if they exist) should have their Priority set to `"Default"`). 
 
 ---
 
@@ -165,34 +175,32 @@ Users can search Tasks using any combination of these criteria:
 
 ## **Section 2: Storage and Retrieval of App Information**
 - Data is stored in JSON files in the `medialab` directory.
-- Implement classes to:
-- Retrieve data from JSON files during initialization.
-- Manage all Task and Reminder operations in memory.
-- Save updated system state to JSON files before termination.
+- Decide  and  define  your  own  organization  (data  schema)  for  the JSON  data  and  the  set  of  files  that  will  be  used  to  store  the  App  data.  
+- Implement  through  the  appropriate  classes  the  methods  that  will  allow you to retrieve the information that the files have and initialize the appropriate objects in your App and refresh the files so that the overall state can be maintained between intermittent runs of the App.
 
-### **Logic**
-- **Initialization**: Load all data into memory from JSON files.
-- **Execution**: Operate in-memory during the session.
-- **Termination**: Write updated data to JSON files.
+### **Logic to retrieve and update the App data**
+- **Initialization**: You should be retrieving all the information in the JSON files and initializing the corresponding objects in your App at the same time.
+- **Execution**: The  App  will  use  the  state  information  retrieved in  program  memory  during  initialization.  All  operations  related  to  Tasks  and Reminders managed by the app will be executed based on the information in program memory.
+- **Termination**: JSON  files  with  system  state  information  will  be refreshed  exclusively  before  App  termination.  The  implementation shall store in the corresponding JSON files the total state of the App at the time of termination.
 
 ---
 
 ## **Section 3: Graphic User Interface (GUI)**
-
-- Ensure system data updates on App termination.
-- **Header**: Top-left of the central window displays `"MediaLab Assistant"`.
-- **Layout**: Central window divided into two halves (2x4 grid).
-
+- The GUI implementation should ensure that when the App is terminated, the system information in the relevant files is updated.
+- The frontend will have only one (central) window, divided in half.
+- **Header**: On the top left of the central window, there should be the title/header `"MediaLab Assistant"`.
+- **Layout**: Each half (top and buttom) will have 4 "cells" or areas (2x4 grid). The cells of the top half will be named for convinience 1, 2, 3 and 4 (from left to right), while the cells of the buttom half will be named 5, 6, 7 and 8 (from left to right).
+ 
 ### **Cells 1-4 (Top Half)**:
-1. **Cell 1**: Total number of Tasks (all statuses).  
-2. **Cell 2**: Tasks with status `"Completed"`.  
-3. **Cell 3**: Tasks with status `"Delayed"`.  
-4. **Cell 4**: Tasks with Deadlines within 7 days.  
+1. **Cell 1**: Total number of Tasks, regardless of `"Status"`.  
+2. **Cell 2**: Total number of Tasks with `Status: "Completed"`.  
+3. **Cell 3**: Tasks with status `Status: "Delayed"`.  
+4. **Cell 4**: Tasks with `"Deadline"` within 7 days.  
 
 ### **Cells 5-8 (Bottom Half)**:
-Each cell has a button that redirects to a page for managing the respective feature.
+Each cell has a button that redirects to a page, in which the user will be able to utilize the according function.
 
-- **Cell 5**: Task Management (create, modify, delete, and search Tasks).  
-- **Cell 6**: Category Management (create, modify, and delete Categories).  
-- **Cell 7**: Priority Management (create, modify, and delete Priorities).  
-- **Cell 8**: Reminder Management (create, modify, and delete Reminders).  
+- **Cell 5**: Task Management. The App must present the available Tasks by Category. The user can create, modify and delete Tasks (according to previous instrucions in Sections 1 and 2). The user can search with filters (according to previous instrucions in Section 1).
+- **Cell 6**: Category Management. The App must present the available Categories. The user can create, modify and delete Categories (according to previous instrucions in Sections 1 and 2).
+- **Cell 7**: Priority Management. The App must present the available Priorities. The user can create, modify and delete Priorities (according to previous instrucions in Sections 1 and 2).
+- **Cell 8**: Reminder Management. The App must present the available Reminders. The user can create, modify and delete Reminders (according to previous instrucions in Sections 1 and 2).
