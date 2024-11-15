@@ -1,85 +1,198 @@
-# Section 1: Design and Implementation of Logic
-Description of the Entities and Attributes. Inside the [] is the format or mandatory values the Attributes will take.
+# Task Management System - Setup Guide
 
-## Task
-- Title
-- Description
-- Category ["Default", ...]
-- Priority ["Default", ...]
-- Deadline ["dd/mm/yyyy"]
-- Status ["Open", "In Progress", "Postponed", "Completed", "Delayed"]
+## Prerequisites
 
-### Points to consider
-- A new task has default status "Open".
-- If the current date is past the deadline, the status should automatically be updated to "Delayed".
-- The user can create a new Task, modify an existing one (all attributes except Status) and delete one (in which case its corresponding Reminders (if they exist) should also be deleted).
+Follow these steps to set up your environment successfully.
 
-## Category
-- Name
+---
 
-### Points to consider
-- A Task belongs to exactly one Category.
-- If the user does not specify the Category of a new Task, the Category is "Default".
-- The user can create new Categories, modify the name of existing ones and delete (in which case its corresponding Tasks (if they exist) should also be deleted).
+### **Java**  
+*Mandatory programming language for this project.*
 
-## Reminder
-- Date
+1. **Download Java JDK 23 for Windows**  
+   [Download JDK-23](https://download.oracle.com/java/23/latest/jdk-23_windows-x64_bin.exe)
 
-### Points to consider
-- A Reminder can have one of the following values: "1 day before the Deadline", "1 week before the Deadline", "1 month before the Deadline", or any date before the Deadline, specified by the user.
-- One Reminder belongs to exactly one Task.
-- One Task can have multiple Reminders.
-- If the Task has Status: Completed, it can't have new Reminders. If a Task pass to Completed, its corresponding Reminders (if they exist) should also be deleted.
-- The user can create new Reminders, modify the date of existing ones and delete.
+2. **Install Java**  
+   - Set the installation folder to:  
+     ```
+     C:\Program Files\Java\jdk-23
+     ```
 
-## Priority
-- Name ["Default", ...]
-- Value ["0", ...]
+3. **Update PATH Variables** (if not auto-configured):  
+   - Press the **Windows key**, search for **"Edit the system environment variables"**, and open it.  
+   - Click **Environment Variables** and locate the `Path` variable under both **User Variables** and **System Variables**.  
+   - Select the `Path` variable, click **Edit**, then **New**, and add:  
+     ```
+     C:\Program Files\Java\jdk-23\bin
+     ```
 
-### Points to consider
-- If the user doesn't assign a Priority to a new Task, its Priority will be set as Default.
-- A Priority with a bigger Value is considered more important than a Priority with a smaller Value.
-- A Value of a Priority should be an integer number greater than 0.
-- A user can't create a Priority with the same Value as an existing one. 
-- The user can't modify or delete the Priority with Name: Default and Value: 0.
-- The user can create new Priorities (assigning a Name and Value), modify existing ones and delete (in which case its corresponding Tasks (if they exist) should have their Priority set to Default). 
+4. **Restart Your Terminals**  
+   - Restart all open terminals (e.g., Command Prompt, VS Code) to apply the changes.
 
-## Search Filters for Tasks
-- A user should be able to search based on any combination of the following criteria/filters: title, category, and priority.
+---
+
+### **JavaFX**  
+*Frontend-related components.*
+
+> **Important:**  
+> JavaFX and Jackson encounter issues when stored in paths with white spaces or non-English characters.  
+> To avoid this, these dependencies are placed in the project directory:  
+> `C:\Users\juant\Documents\coding\task-mng-system\lib`  
+> Ensure the path to `lib` has no spaces and uses only English characters.
+
+1. **Download JavaFX SDK**  
+   - Visit the [Gluon JavaFX Website](https://gluonhq.com/products/javafx/) and configure the following:  
+     - **JavaFX version:** `23.0.1`  
+     - **Operating System:** `Windows`  
+     - **Architecture:** `x64`  
+     - **Type:** `SDK`  
+   - Click **Download** to get the `.zip` file:  
+     ```
+     openjfx-23.0.1_windows-x64_bin-sdk
+     ```
+
+2. **Extract and Place Files**  
+   - Unzip the downloaded file. Inside, locate the folder:  
+     ```
+     javafx-sdk-23.0.1
+     ```
+   - Move `javafx-sdk-23.0.1` to the project directory:  
+     ```
+     C:\Users\juant\Documents\coding\task-mng-system\lib
+     ```
+
+---
+
+### **Jackson**  
+*Used for reading `.json` files. Alternatively, you can use Gson.*
+
+1. **Download Jackson Packages**  
+   Download the following `.jar` files by navigating to the provided links. Choose the package that exactly matches the titles below (usually the 9th option in the list).
+
+   - [**jackson-annotations-2.18.1.jar**](https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.18.1/)
+   - [**jackson-core-2.18.1.jar**](https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.18.1/)
+   - [**jackson-databind-2.18.1.jar**](https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.18.1/)
+
+2. **Place Files in the `lib` Directory**  
+   After downloading, move the `.jar` files to:  
+     ```
+     C:\Users\juant\Documents\coding\task-mng-system\lib
+     ```
 
 
+---
 
+# Project Description
 
-# Section 2: Storage and Retrieval of App Information
-- For Storage and Retrieval of App Information JSON files will be used.
-- The data files should be stored in a folder named "medialab".
-- Decide  and  define  your  own  organization  (data  schema)  for  the JSON  data  and  the  set  of  files  that  will  be  used  to  store  the  App  data.  
-- Implement  through  the  appropriate  classes  the  methods  that  will  allow you to retrieve the information that the files have and initialize the appropriate objects in your App and refresh the files so that the overall state can be maintained between intermittent runs of the App.
+## **Section 1: Design and Implementation of Logic**
 
-## Logic to retrieve and update the App data
-- Initialization: You should be retrieving all the information in the JSON files and initializing the corresponding objects in your App at the same time.
-- Execution:  The  App  will  use  the  state  information  retrieved in  program  memory  during  initialization.  All  operations  related  to  Tasks  and Reminders managed by the app will be executed based on the information in program memory.
-- Termination:  JSON  files  with  system  state  information  will  be refreshed  exclusively  before  App  termination.  The  implementation shall store in the corresponding JSON files the total state of the App at the time of termination.
+### **Task**
+- **Attributes**:
+- **Title**
+- **Description**
+- **Category**: `["Default", ...]`
+- **Priority**: `["Default", ...]`
+- **Deadline**: `["dd/mm/yyyy"]`
+- **Status**: `["Open", "In Progress", "Postponed", "Completed", "Delayed"]`
 
+#### **Points to Consider**
+- A new task defaults to status `"Open"`.
+- Tasks with deadlines in the past automatically update to `"Delayed"`.
+- Users can:
+- Create a new Task.
+- Modify existing tasks (excluding Status).
+- Delete tasks (also removes associated Reminders, if any).
 
+---
 
+### **Category**
+- **Attributes**:
+- **Name**
 
-# Section 3: Graphic User Interface (GUI)
-- The GUI implementation should ensure that when the App is terminated, the system information in the relevant files is updated
-- On the top left of the central window, there should be the title/header "MediaLab Assistant".
-- The frontend will have one central window, divided in half. 
-- Each half (top and buttom) will have 4 "cells" or areas (kind like a 2x4 matrix). The cells of the top half will be named for convinience 1, 2, 3 and 4 (from left to right), while the cells of the buttom half will be named for convinience 5, 6, 7 and 8 (from left to right).
+#### **Points to Consider**
+- Tasks belong to exactly one Category.
+- Unspecified Categories default to `"Default"`.
+- Users can:
+- Create new Categories.
+- Modify existing Categories.
+- Delete Categories (also removes associated Tasks, if any).
 
-## Cells 1-4
-- Cell 1: total  number  of  Tasks  regardless  of  Status.
-- Cell 2: number  of  Tasks  with  Status "Completed".
-- Cell 3: number  of  Tasks  with  Status  "Delayed".
-- Cell 4: number  of Tasks with Deadline within 7 days.
+---
 
-## Cells 5-8
-These cells should display a button that redirects the user to another page, in which the user will be able to utilize the according function.
-- Cell 5: Task Management. The App must present the available Tasks by Category. The user can create, modify and delete Tasks (according to previous instrucions in Sections 1 and 2). The user can search with filters (according to previous instrucions in Section 1).
-- Cell 6: Category Management. The App must present the available Categories. The user can create, modify and delete Categories (according to previous instrucions in Sections 1 and 2).
-- Cell 7: Priority Management. The App must present the available Priorities. The user can create, modify and delete Priorities (according to previous instrucions in Sections 1 and 2).
-- Cell 8: Reminder Management. The App must present the available Reminders. The user can create, modify and delete Reminders (according to previous instrucions in Sections 1 and 2).
+### **Reminder**
+- **Attributes**:
+- **Date**
 
+#### **Points to Consider**
+- Valid Reminder dates:
+- `"1 day before Deadline"`, `"1 week before Deadline"`, `"1 month before Deadline"`, or custom dates before the Deadline.
+- Rules:
+- Reminders belong to exactly one Task.
+- Tasks may have multiple Reminders.
+- Completed Tasks cannot have new Reminders.
+- Tasks marked as `"Completed"` automatically delete their Reminders.
+- Users can:
+- Create new Reminders.
+- Modify existing ones.
+- Delete Reminders.
+
+---
+
+### **Priority**
+- **Attributes**:
+- **Name**: `["Default", ...]`
+- **Value**: `["0", ...]`
+
+#### **Points to Consider**
+- Default Priority is `"Default"` with a Value of `0`.
+- Larger Values indicate higher Priority.
+- Priority Values must be unique and integers > 0.
+- Users cannot modify or delete the `"Default"` Priority.
+- Users can:
+- Create new Priorities.
+- Modify existing ones.
+- Delete Priorities (affected Tasks default to `"Default"` Priority).
+
+---
+
+### **Search Filters for Tasks**
+Users can search Tasks using any combination of these criteria:
+- **Title**
+- **Category**
+- **Priority**
+
+---
+
+## **Section 2: Storage and Retrieval of App Information**
+- Data is stored in JSON files in the `medialab` directory.
+- Implement classes to:
+- Retrieve data from JSON files during initialization.
+- Manage all Task and Reminder operations in memory.
+- Save updated system state to JSON files before termination.
+
+### **Logic**
+- **Initialization**: Load all data into memory from JSON files.
+- **Execution**: Operate in-memory during the session.
+- **Termination**: Write updated data to JSON files.
+
+---
+
+## **Section 3: Graphic User Interface (GUI)**
+
+- Ensure system data updates on App termination.
+- **Header**: Top-left of the central window displays `"MediaLab Assistant"`.
+- **Layout**: Central window divided into two halves (2x4 grid).
+
+### **Cells 1-4 (Top Half)**:
+1. **Cell 1**: Total number of Tasks (all statuses).  
+2. **Cell 2**: Tasks with status `"Completed"`.  
+3. **Cell 3**: Tasks with status `"Delayed"`.  
+4. **Cell 4**: Tasks with Deadlines within 7 days.  
+
+### **Cells 5-8 (Bottom Half)**:
+Each cell has a button that redirects to a page for managing the respective feature.
+
+- **Cell 5**: Task Management (create, modify, delete, and search Tasks).  
+- **Cell 6**: Category Management (create, modify, and delete Categories).  
+- **Cell 7**: Priority Management (create, modify, and delete Priorities).  
+- **Cell 8**: Reminder Management (create, modify, and delete Reminders).  
